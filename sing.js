@@ -18,7 +18,7 @@ window.onload = ()=>{
 selectBox.classList.add("hide");
 playBoard.classList.add("show");
 
-for (let i = 0; i < 9; i+=1) {
+for (let i = 0; i < boxes.length; i+=1) {
     boxes[i].addEventListener("click", function() {
         if (!gameOver && this.innerHTML == "") {
             this.innerHTML = currentPlayer;
