@@ -26,45 +26,45 @@ a{
 }
 ::selection{
   color: #fff;
-  background:#823E88;
+  background:#9796F0;
 }
 body{
-  background:#823E88;
+  background:linear-gradient(135deg,#9796F0, #FBC7D4 );
 }
-.select-box, .play-board, .result-box{
+.select-box, .play-board, .result-box,.select-box2{
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.3s ease;
 }
-.select-box{
+.select-box ,.select-box2{
   background: #fff;
   padding: 20px 25px 25px;
   border-radius: 5px;
   max-width: 400px;
   width: 100%;
 }
-.select-box.hide{
+.select-box.hide,.select-box2.hide{
   opacity: 0;
   pointer-events: none;
 }
-.select-box header{
+.select-box header,.select-box2 header{
   font-size: 30px;
   font-weight: 600;
   padding-bottom: 10px;
   border-bottom: 1px solid lightgrey;
 }
-.select-box .title{
+.select-box .title ,.select-box2 .title{
   font-size: 22px;
   font-weight: 500;
   margin: 20px 0;
 }
-.select-box .options{
+.select-box .options,.select-box2 .options2{
   display: flex;
   width: 100%;
 }
-.options button{
+.options button , .options2 button{
   width: 100%;
   font-size: 20px;
   font-weight: 500;
@@ -78,7 +78,7 @@ body{
   transition: all 0.3s ease;
 }
 .options button:hover,
-.btn button:hover{
+.btn button:hover,.options2 button:hover{
   transform: scale(0.96);
   background-image: linear-gradient(144deg,#FDBF9C, #F17173 50%);
 }
@@ -88,14 +88,26 @@ body{
 .options button.playerO{
   margin-left: 5px;
 }
-.select-box .credit{
+
+.options button.eas{
+  margin-right: 5px;
+
+}
+.options button.mid{
+  margin: 5px;
+}
+
+.options2 button.dif{
+  margin-left: 5px;
+}
+.select-box .credit , .select-box2 .credit{
   text-align: center;
   margin-top: 20px;
   font-size: 18px;
   font-weight: 500;
 }
-.select-box .credit a{
-  color: #823E88;
+.select-box .credit a {
+  color: #9796F0;
   text-decoration: none;
 }
 .select-box .credit a:hover{
@@ -126,7 +138,7 @@ body{
 .players span{
   position: relative;
   z-index: 2;
-  color: #823E88;
+  color: #9796F0;
   font-size: 20px;
   font-weight: 500;
   padding: 10px 0;
@@ -140,7 +152,7 @@ body{
   color: #fff;
 }
 .players.active span:last-child{
-  color: #823E88;
+  color: #9796F0;
 }
 .players span:first-child{
   color: #fff;
@@ -151,7 +163,7 @@ body{
   left: 0;
   width: 50%;
   height: 100%;
-  background: #823E88;
+  background: #9796F0;
   border-radius: 5px;
   transition: all 0.3s ease;
 }
@@ -159,7 +171,7 @@ body{
   left: 50%;
 }
 .players.active span:first-child{
-  color: #823E88;
+  color: #9796F0;
 }
 .players.active span:nth-child(2){
   color: #fff;
@@ -179,7 +191,7 @@ body{
   height: 90px;
   width: 90px;
   margin: 2px;
-  color: #823E88;
+  color: #9796F0;
   font-size: 40px;
   line-height: 80px;
   text-align: center;
@@ -224,10 +236,77 @@ body{
   font-weight: 500;
   padding: 8px 20px;
   border: none;
-  background-image: linear-gradient(144deg,#E23F6A, #C63E81 50%);
+  background-image: linear-gradient(144deg,#9796F0, #FBC7D4 50%);
   border-radius: 5px;
   color: #fff;
   outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+.btn button:hover{
+  background:#f1eeff;
+    color: #9796F0;
+}
+
+#an{
+ 
+  position: relative;
+  width: 100%;
+  height: 650px;
+  overflow: hidden;
+}
+#an .air{
+  position: absolute;
+  bottom: 200px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+  background-size: 1000px 100px
+}
+#an .air.air1{
+  animation: wave 30s linear infinite;
+  z-index: 1000;
+  opacity: 1;
+  animation-delay: 0s;
+  bottom: 0;
+}
+#an .air.air2{
+  animation: wave2 15s linear infinite;
+  z-index: 999;
+  opacity: 0.5;
+  animation-delay: -5s;
+  bottom: 10px;
+}
+#an .air.air3{
+  animation: wave 30s linear infinite;
+  z-index: 998;
+  opacity: 0.2;
+  animation-delay: -2s;
+  bottom: 15px;
+}
+#an .air.air4{
+  animation: wave2 5s linear infinite;
+  z-index: 997;
+  opacity: 0.7;
+  animation-delay: -5s;
+  bottom: 20px;
+}
+@keyframes wave{
+  0%{
+    background-position-x: 0px; 
+  }
+  100%{
+    background-position-x: 1000px; 
+  }
+}
+@keyframes wave2{
+  0%{
+    background-position-x: 0px; 
+  }
+  100%{
+    background-position-x: -1000px; 
+  }
+}
+
