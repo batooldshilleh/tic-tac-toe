@@ -7,6 +7,8 @@
     font-family: 'Gloria Hallelujah', cursive;
        
 }
+
+/*logo*/
 a{
   text-decoration: none;
 }
@@ -24,6 +26,8 @@ a{
 #bl{
     color: #38B6FF;
 }
+
+/*body*/
 ::selection{
   color: #fff;
   background:#9796F0;
@@ -31,6 +35,8 @@ a{
 body{
   background:linear-gradient(135deg,#9796F0, #FBC7D4 );
 }
+
+/*boxs*/
 .select-box, .play-board, .result-box,.select-box2{
   position: absolute;
   top: 50%;
@@ -80,7 +86,7 @@ body{
 .options button:hover,
 .btn button:hover,.options2 button:hover{
   transform: scale(0.96);
-  background-image: linear-gradient(144deg,#FDBF9C, #F17173 50%);
+  background-image: linear-gradient(144deg,rgb(253, 191, 156), #F17173 50%);
 }
 .options button.playerX{
   margin-right: 5px;
@@ -114,6 +120,7 @@ body{
   text-decoration: underline;
 }
 
+/*play aria*/
 .play-board{
   opacity: 0;
   pointer-events: none;
@@ -199,6 +206,8 @@ body{
   background: #fff;
 }
 
+
+/*resalt box*/
 .result-box{
   padding: 25px 20px;
   border-radius: 5px;
@@ -236,7 +245,7 @@ body{
   font-weight: 500;
   padding: 8px 20px;
   border: none;
-  background-image: linear-gradient(144deg,#9796F0, #FBC7D4 50%);
+  background-image: linear-gradient(144deg,rgb(149, 148, 240), #FBC7D4 50%);
   border-radius: 5px;
   color: #fff;
   outline: none;
@@ -245,10 +254,12 @@ body{
 }
 
 .btn button:hover{
-  background:#f1eeff;
+  background:rgb(241, 238, 255);
     color: #9796F0;
 }
 
+
+/*wave aria*/
 #an{
  
   position: relative;
@@ -262,7 +273,7 @@ body{
   left: 0;
   width: 100%;
   height: 100px;
-  background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+ background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
   background-size: 1000px 100px
 }
 #an .air.air1{
@@ -308,5 +319,76 @@ body{
   100%{
     background-position-x: -1000px; 
   }
+}
+
+/*defcaltstyle*/
+.rb-box {
+  width: 95%;
+  max-width: 420px;
+  margin: 20px auto;
+  padding:10px;
+  background: #fff;
+  border-radius: .75em;
+  -webkit-filter: drop-shadow(1px 2px 5px rgba(255,255,255,.1));
+  filter: drop-shadow(1px 2px 5px rgba(0,0,0,.3));
+  box-shadow: 
+    0 2px 2px rgba(149, 148, 240,.5),
+    0 0px 5px rgba(149, 148, 240,.15),
+    0 0px 4px rgba(0,0,0,.35),
+    0 5px 20px rgba(149, 148, 240,.25),
+    0 15px 50px rgba(149, 148, 240,.75),
+    inset 0 0 15px rgba(149, 148, 240,.05);
+}
+
+/* Custom Radio Button */
+p {
+  font-size: 20px;
+}
+
+.rb {
+  padding: 16px 0;
+  text-align: center;
+  background: rgba(255,255,255,.03);
+  border-radius: .3em;
+}
+
+.rb-tab {
+  display: inline-block;
+  position: relative;
+  width: 20%;
+}
+
+.rb-txt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+  color: #9796F0;
+}
+
+.rb-spot {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.3);
+  border-radius: 100%;
+  cursor: pointer;
+  transition: ease .5s;
+}
+
+.rb-tab-active .rb-spot {
+  
+  border: 20px solid rgba(253, 191, 156,.8);
+}
+
+/* Submit Button */
+.button-box {
+  padding: 10px 0;
+  text-align: center;
 }
 

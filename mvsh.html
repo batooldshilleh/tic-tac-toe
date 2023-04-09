@@ -4,45 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <!-- <title>Tic Tac Toe Game | CodingNepal</title> -->
-    <link rel="stylesheet" href="sigl.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
-<body>
-  <!-- select box -->
-  <div class="head"><h1 class="curs">
-    
-    <a href="index.html"> <span id="pin">T</span>
-      <span id="ya">i</span>
-      <span id="bl">c</span> 
-      <span id="bl">T</span>
-      <span id="pin">a</span>
-      <span id="ya">c</span>
-    </a> 
-  
-    </h1>
-    </div>
 
+<body>
+  
+  <!--logo-->
+  <div class="head">
+    <h1 class="curs">  
+      <a href="index.html"> 
+        <span id="pin">T</span>
+        <span id="ya">i</span>
+        <span id="bl">c</span> 
+        <span id="bl">T</span>
+        <span id="pin">a</span>
+        <span id="ya">c</span>
+      </a> 
+    </h1>
+  </div>
+
+
+  <!--wave aria-->
+  <div id="an">
+      <div class='air air1'></div>
+      <div class='air air2'></div>
+      <div class='air air3'></div>
+      <div class='air air4'></div>
+  </div>
+     
+  <!--select box-->
   <div class="select-box">
-    
     <div class="content">
       <div class="title">Select which you want to be?</div>
       <div class="options">
         <button class="playerX">Player (X)</button>
         <button class="playerO">Player (O)</button>
       </div>
-      
     </div>
   </div> 
 
-  <!-- playboard section -->
 
-  <div id="an">
-    <div class='air air1'></div>
-    <div class='air air2'></div>
-    <div class='air air3'></div>
-    <div class='air air4'></div>
-</div>
   <div class="play-board">
+    <!--select def-->
+    <div class="rb-box">
+
+        <!-- Radio Button Module -->
+        <p>chose  difecalty</p>
+        <div id="rb-1" class="rb">
+          <div class="rb-tab rb-tab-active" id = "b1"data-value="1">
+            <div class="rb-spot">
+              <span class="rb-txt">hard</span>
+            </div>
+          </div>
+          <div class="rb-tab" data-value="2" id="b2">
+            <div class="rb-spot">
+              <span class="rb-txt">med</span>
+            </div>
+          </div>
+          <div class="rb-tab" data-value="3" ib="b3">
+            <div class="rb-spot">
+              <span class="rb-txt">esay</span>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <!--x or o-->
     <div class="details">
       <div class="players">
         <span class="Xturn">X's Turn</span>
@@ -50,6 +79,8 @@
         <div class="slider"></div>
       </div>
     </div>
+     
+    <!--play aria-->
     <div class="play-area">
       <section id="p;">
         <span class="box"></span>
@@ -74,8 +105,7 @@
     <div class="won-text"></div>
     <div class="btn"><button>Replay</button></div>
   </div>
-
-  <script src="sing.js"></script> 
-
+</div>
+<script src="mvsh.js"></script> 
 </body>
 </html>

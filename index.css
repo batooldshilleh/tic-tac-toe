@@ -6,6 +6,8 @@ body{
     font-family: 'Delicious Handrawn', cursive;
     font-family: 'Gloria Hallelujah', cursive;
 }
+
+/* form  */
 form{
     height: 510px;
     width: 400px;
@@ -27,6 +29,8 @@ form img{
     width: 300px;
 }
 
+
+/*button*/
 button{
     margin-top: 10px;
     width: 400px;
@@ -62,7 +66,8 @@ button:hover a{
     color:#9796F0;
     
 }
- 
+
+/*back ground*/
 .backwrap {
     
     /* Old browsers */
