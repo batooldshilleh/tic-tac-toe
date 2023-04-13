@@ -7,7 +7,13 @@ allBox = document.querySelectorAll("section span"),
 resultBox = document.querySelector(".result-box"),
 wonText = resultBox.querySelector(".won-text"),
 replayBtn = resultBox.querySelector("button");
-var survey = []; //Bidimensional array: [ [1,3], [2,4] ]
+var level;
+
+function setlevel(value){
+  sessionStorage.setItem('level1', value);
+  console.log(level);
+}
+
 window.onload = ()=>{
     for (let i = 0; i < allBox.length; i++) {
        allBox[i].setAttribute("onclick", "clickedBox(this)");
@@ -35,9 +41,4 @@ replayBtn.onclick = ()=>{
 
 
 
-//Switcher function:
-$(".rb-tab").click = ()=>{
-  //Spot switcher:
-  $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
-  $(this).setAttribute("rb-tab-active");
-};
+
