@@ -6,11 +6,31 @@ players = document.querySelector(".players"),
 allBox = document.querySelectorAll("section span"),
 resultBox = document.querySelector(".result-box"),
 wonText = resultBox.querySelector(".won-text"),
-replayBtn = resultBox.querySelector("button")
-defBtn = document.querySelector(".def");
-var level="hi";
-var humanPlayer , combuterPlayer ;
+replayBtn = resultBox.querySelector("button");
+var level ;
+// set on click button 
+window.onload = ()=>{
+    for (let i = 0; i < allBox.length; i++) {
+       allBox[i].setAttribute("onclick", "clickedBox(this)");
+    }
+}
 
+let ai = 'X';
+let human = 'O';
+let currentPlayer = human;
+selectBox.classList.add("hide");
+playBoard.classList.add("show");
+// select x or y 
+selectBtnX.onclick = ()=>{
+    selectBox.classList.add("hide");
+    playBoard.classList.add("show");
+}
+
+selectBtnO.onclick = ()=>{ 
+    selectBox.classList.add("hide");
+    playBoard.classList.add("show");
+    players.setAttribute("class", "players active player");
+}
 
 function setlevel(value){
   sessionStorage.setItem('level1', value);
@@ -18,36 +38,147 @@ function setlevel(value){
   console.log(level)
 }
 
-window.onload = ()=>{
-    for (let i = 0; i < allBox.length; i++) {
-       allBox[i].setAttribute("onclick", "clickedBox(this)");
+//drow icons
+let playerXIcon = "fas fa-times",
+playerOIcon = "far fa-circle",
+playerSign = "X",
+runBot = true;
+
+//drow in play aria
+function clickedBox(element){
+    if(players.classList.contains("player")){
+        playerSign = "O";
+        element.innerHTML = `<i class="${playerOIcon}"></i>`;
+        players.classList.remove("active");
+        element.setAttribute("id", playerSign);
+    }else{
+        element.innerHTML = `<i class="${playerXIcon}"></i>`;
+        element.setAttribute("id", playerSign);
+        players.classList.add("active");
+    }
+    selectWinner();
+    element.style.pointerEvents = "none";
+    playBoard.style.pointerEvents = "none";
+    let randomTimeDelay = ((Math.random() * 1000) + 200).toFixed();
+    setTimeout(()=>{
+        bot(runBot);
+    }, randomTimeDelay);
+}
+
+
+//
+function bot(){
+    let array = [];
+    if(runBot){
+        playerSign = "O";
+        for (let i = 0; i < allBox.length; i++) {
+            if(allBox[i].childElementCount == 0){
+                array.push(i);
+            }
+        }
+        let v = - Infinity;
+        let move;
+        let s = array.length;
+        for (let i = 0; i < allBox.length; i++) {
+          if(s > 0){
+              if(players.classList.contains("player")){ 
+                  
+                  let score = alphabeta(board, 0, -Infinity, Infinity, false);
+                  if (score > v){
+                    v = score;
+                    move = i;
+                  }
+                }
+                if(currentPlayer == "ai"){
+                playerSign = "X";
+                  allBox[move].innerHTML = `<i class="${playerXIcon}"></i>`;
+                  allBox[move].setAttribute("id", playerSign);
+                  players.classList.add("active");
+              }
+              else{
+                  allBox[move].innerHTML = `<i class="${playerOIcon}"></i>`;
+                  players.classList.remove("active");
+                  allBox[move].setAttribute("id", playerSign);
+              }
+              selectWinner();
+          }
+          allBox[move].style.pointerEvents = "none";
+          playBoard.style.pointerEvents = "auto";
+          playerSign = "X";
+        }
+      }
+    
+}
+
+
+function getIdVal(classname){
+    return document.querySelector(".box" + classname).id;
+}
+function checkIdSign(val1, val2, val3, sign){ 
+    if(getIdVal(val1) == sign && getIdVal(val2) == sign && getIdVal(val3) == sign){
+        return true;
     }
 }
-
-selectBtnX.onclick = ()=>{
-    selectBox.classList.add("hide");
-    playBoard.classList.add("show");
-    humanPlayer = "X";
-    combuterPlayer ="O";
-    
-
+function selectWinner(){
+    if(checkIdSign(1,2,3,playerSign) || checkIdSign(4,5,6, playerSign) || checkIdSign(7,8,9, playerSign) || checkIdSign(1,4,7, playerSign) || checkIdSign(2,5,8, playerSign) || checkIdSign(3,6,9, playerSign) || checkIdSign(1,5,9, playerSign) || checkIdSign(3,5,7, playerSign)){
+        runBot = false;
+        bot(runBot);
+        setTimeout(()=>{
+            resultBox.classList.add("show");
+            playBoard.classList.remove("show");
+        }, 700);
+        wonText.innerHTML = `Player <p>${playerSign}</p> won the game!`;
+    }else{
+        if(getIdVal(1) != "" && getIdVal(2) != "" && getIdVal(3) != "" && getIdVal(4) != "" && getIdVal(5) != "" && getIdVal(6) != "" && getIdVal(7) != "" && getIdVal(8) != "" && getIdVal(9) != ""){
+            runBot = false;
+            bot(runBot);
+            setTimeout(()=>{
+                resultBox.classList.add("show");
+                playBoard.classList.remove("show");
+            }, 700);
+            wonText.textContent = "Match has been drawn!";
+        }
+    }
 }
-
-selectBtnO.onclick = ()=>{ 
-    selectBox.classList.add("hide");
-    playBoard.classList.add("show");
-    
-    players.setAttribute("class", "players active player");
-    humanPlayer = "O";
-    combuterPlayer ="X";
-}
-
-
 replayBtn.onclick = ()=>{
     window.location.reload();
 }
 
+let scores = {
+  X: 1,
+  O: -1,
+  tie: 0
+};
 
+function alphabeta(board, depth, alpha, beta, isMaximizing) {
+  let array = [];
+  
+  
+      for (let i = 0; i < allBox.length; i++) {
+          if(allBox[i].childElementCount == 0){
+              array.push(i);
+          }
+        }
+        let result = selectWinner();
+    if (result !== null) {
+      return scores[result];
+    }
 
+    if (isMaximizing) {
+      let v = -Infinity;
+      for (let i = 0; i < 3; i++) {
+       
+          if (array[i] == '') {
+            array[i] = ai;
+            let score = alphabeta(board, depth + 1, alpha, beta, false);
+            array[i] = '';
+            v=min(score,v);
+            alpha = max(alpha,v);
+            if(beta < alpha || beta == alpha)
+            break;
+          }
+      }
+      return v;
+    }
 
-
+}
