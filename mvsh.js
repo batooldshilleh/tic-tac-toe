@@ -6,12 +6,16 @@ players = document.querySelector(".players"),
 allBox = document.querySelectorAll("section span"),
 resultBox = document.querySelector(".result-box"),
 wonText = resultBox.querySelector(".won-text"),
-replayBtn = resultBox.querySelector("button");
-var level;
+replayBtn = resultBox.querySelector("button")
+defBtn = document.querySelector(".def");
+var level="hi";
+var humanPlayer , combuterPlayer ;
+
 
 function setlevel(value){
   sessionStorage.setItem('level1', value);
-  console.log(level);
+  level = sessionStorage.getItem('level1');
+  console.log(level)
 }
 
 window.onload = ()=>{
@@ -23,6 +27,8 @@ window.onload = ()=>{
 selectBtnX.onclick = ()=>{
     selectBox.classList.add("hide");
     playBoard.classList.add("show");
+    humanPlayer = "X";
+    combuterPlayer ="O";
     
 
 }
@@ -32,12 +38,15 @@ selectBtnO.onclick = ()=>{
     playBoard.classList.add("show");
     
     players.setAttribute("class", "players active player");
+    humanPlayer = "O";
+    combuterPlayer ="X";
 }
 
 
 replayBtn.onclick = ()=>{
     window.location.reload();
 }
+
 
 
 
