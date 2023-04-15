@@ -5,8 +5,7 @@ playBoard = document.querySelector(".play-board"),
 players = document.querySelector(".players"),
 allBox = document.querySelectorAll("section span"),
 resultBox = document.querySelector(".result-box"),
-wonText = resultBox.querySelector(".won-text"),
-replayBtn = resultBox.querySelector("button");
+wonText = resultBox.querySelector(".won-text");
 var level ;
 // set on click button 
 window.onload = ()=>{
@@ -33,9 +32,9 @@ selectBtnO.onclick = ()=>{
 }
 
 function setlevel(value){
-  sessionStorage.setItem('level1', value);
-  level = sessionStorage.getItem('level1');
-  console.log(level)
+    sessionStorage.setItem('level1', value);
+     console.log(level)
+ 
 }
 
 //drow icons
@@ -44,10 +43,11 @@ playerOIcon = "far fa-circle",
 playerSign = "X",
 runBot = true;
 
+
 //drow in play aria
 function clickedBox(element){
     if(players.classList.contains("player")){
-        playerSign = "O";
+        playerSign = human;
         element.innerHTML = `<i class="${playerOIcon}"></i>`;
         players.classList.remove("active");
         element.setAttribute("id", playerSign);
@@ -70,43 +70,23 @@ function clickedBox(element){
 function bot(){
     let array = [];
     if(runBot){
-        playerSign = "O";
+        playerSign = human;
         for (let i = 0; i < allBox.length; i++) {
             if(allBox[i].childElementCount == 0){
                 array.push(i);
             }
         }
-        let v = - Infinity;
-        let move;
-        let s = array.length;
-        for (let i = 0; i < allBox.length; i++) {
-          if(s > 0){
-              if(players.classList.contains("player")){ 
-                  
-                  let score = alphabeta(board, 0, -Infinity, Infinity, false);
-                  if (score > v){
-                    v = score;
-                    move = i;
-                  }
-                }
-                if(currentPlayer == "ai"){
-                playerSign = "X";
-                  allBox[move].innerHTML = `<i class="${playerXIcon}"></i>`;
-                  allBox[move].setAttribute("id", playerSign);
-                  players.classList.add("active");
-              }
-              else{
-                  allBox[move].innerHTML = `<i class="${playerOIcon}"></i>`;
-                  players.classList.remove("active");
-                  allBox[move].setAttribute("id", playerSign);
-              }
-              selectWinner();
-          }
-          allBox[move].style.pointerEvents = "none";
-          playBoard.style.pointerEvents = "auto";
-          playerSign = "X";
+
+        if(level === 'Easy'){
+            console.log(level);
         }
-      }
+        else if (level === 'Medium'){
+            console.log(level)
+        }
+        else{
+            console.log(level)
+        }
+    }
     
 }
 
@@ -149,16 +129,16 @@ let scores = {
   O: -1,
   tie: 0
 };
-
-function alphabeta(board, depth, alpha, beta, isMaximizing) {
-  let array = [];
+let array = [];
   
   
-      for (let i = 0; i < allBox.length; i++) {
-          if(allBox[i].childElementCount == 0){
-              array.push(i);
-          }
-        }
+for (let i = 0; i < allBox.length; i++) {
+    if(allBox[i].childElementCount == 0){
+        array.push(i);
+    }
+  }
+function alphabeta(array, depth, alpha, beta, isMaximizing) {
+ 
         let result = selectWinner();
     if (result !== null) {
       return scores[result];
@@ -182,3 +162,4 @@ function alphabeta(board, depth, alpha, beta, isMaximizing) {
     }
 
 }
+
