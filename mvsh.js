@@ -5,10 +5,10 @@ allBox = document.querySelectorAll("section span"),
 resultBox = document.querySelector(".result-box"),
 wonText = resultBox.querySelector(".won-text"),
 replayBtn = resultBox.querySelector("button");
-
+let level ;
 
 function setlevel(value){
-    let level ;
+    
     sessionStorage.setItem('level1', value);
     level = sessionStorage.getItem('level1');
     }
@@ -26,7 +26,6 @@ selectBox.classList.add("hide");
     selectBox.classList.add("hide");
     playBoard.classList.add("show");
 }
-
 selectBtnO.onclick = ()=>{ 
     selectBox.classList.add("hide");
     playBoard.classList.add("show");
@@ -37,9 +36,9 @@ let human = "X",
 ai = "O",
 playerSign = "X",
 runBot = true;
-
+console.log(array[1]);
 function clickedBox(element){
-    
+        
         element.innerHTML = human;
         element.setAttribute("id", playerSign);
         players.classList.add("active");
@@ -100,6 +99,7 @@ function selectWinner(){
             playBoard.classList.remove("show");
         }, 700);
         wonText.innerHTML = `Player <p>${playerSign}</p> won the game!`;
+        return "won";
     }else{
         if(getIdVal(1) != "" && getIdVal(2) != "" && getIdVal(3) != "" && getIdVal(4) != "" && getIdVal(5) != "" && getIdVal(6) != "" && getIdVal(7) != "" && getIdVal(8) != "" && getIdVal(9) != ""){
             runBot = false;
@@ -109,34 +109,35 @@ function selectWinner(){
                 playBoard.classList.remove("show");
             }, 700);
             wonText.textContent = "Match has been drawn!";
+            return "tie";
         }
     }
+    return null;
 }
 
 replayBtn.onclick = ()=>{
     window.location.reload();
 }
 
-
 function bestMove(board) {
+    
     let v = -Infinity;
     let move;
-    for (let i = 0; i < 9; i++) {
-      
-        if (board[i] == '') {
-          board[i] = 'O';
-          let score = alphabeta(board, 0, -Infinity, Infinity, false);
-          board[i]= '';
-          if (score > v) {
-            v = score;
-            move = i;
-          }
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] == '') {
+        board[i] = 'O';
+        let score = alphabeta(board, 0, -Infinity, Infinity, false);
+        board[i]= '';
+        if (score > v) {
+          v = score;
+          move = i;
         }
-      
+      }
     }
     board[move]= 'O';
-    
-}
+    return move;
+  }
+  
   
   let scores = {
     X: 1,
@@ -145,7 +146,7 @@ function bestMove(board) {
   };
  
   function alphabeta(board, depth, alpha, beta, isMaximizing) {
-    let result = selectWinner(board);
+    let result = selectWinner();
     if (result !== null) {
       return scores[result];
     }
@@ -157,12 +158,12 @@ function bestMove(board) {
             board[i] = 'X';
             let score = alphabeta(board, depth + 1, alpha, beta, false);
             board[i] = '';
-            if(props.level=="hard") 
-            v = score > v ? score : v 
-            else if (props.level=='easy')
-            v = score < v ? score : v 
-            else if (props.level=="mid")
-            v = Math.random() < 0.5 ? score : v;
+            if(level=="Hard"){
+            v = score > v ? score : v }
+            else if (level=='Easy'){
+            v = score < v ? score : v}
+            else if (level=="Medium"){
+            v = Math.random() < 0.5 ? score : v;}
             alpha = alpha > v ? alpha : v 
             if(beta < alpha || beta == alpha)
             break;
@@ -176,12 +177,12 @@ function bestMove(board) {
             board[i] = 'O';
             let score = alphabeta(board, depth + 1, alpha, beta, true);
             board[i] = '';
-            if(level=="Hard")
-            v = score < v ? score : v 
-            else if (level=='Easy')
-            v = score > v ? score : v 
-            else if (level=="Medium")
-            v = Math.random() < 0.5 ? score : v;
+            if(level=="Hard"){
+            v = score < v ? score : v }
+            else if (level=='Easy'){
+            v = score > v ? score : v }
+            else if (level=="Medium"){
+            v = Math.random() < 0.5 ? score : v;}
             beta = beta < v ? beta : v 
             if(beta < alpha || beta == alpha)
             break;
