@@ -1,26 +1,28 @@
 const selectBox = document.querySelector(".select-box"),
-selectBtnX = selectBox.querySelector(".options .playerX"),
-selectBtnO = selectBox.querySelector(".options .playerO"),
 playBoard = document.querySelector(".play-board"),
 players = document.querySelector(".players"),
 allBox = document.querySelectorAll("section span"),
 resultBox = document.querySelector(".result-box"),
-wonText = resultBox.querySelector(".won-text");
-var level ;
-// set on click button 
+wonText = resultBox.querySelector(".won-text"),
+replayBtn = resultBox.querySelector("button");
+
+
+function setlevel(value){
+    let level ;
+    sessionStorage.setItem('level1', value);
+    level = sessionStorage.getItem('level1');
+    }
+
 window.onload = ()=>{
     for (let i = 0; i < allBox.length; i++) {
        allBox[i].setAttribute("onclick", "clickedBox(this)");
     }
 }
 
-let ai = 'X';
-let human = 'O';
-let currentPlayer = human;
 selectBox.classList.add("hide");
-playBoard.classList.add("show");
-// select x or y 
-selectBtnX.onclick = ()=>{
+    playBoard.classList.add("show");
+
+/*selectBtnX.onclick = ()=>{
     selectBox.classList.add("hide");
     playBoard.classList.add("show");
 }
@@ -29,33 +31,19 @@ selectBtnO.onclick = ()=>{
     selectBox.classList.add("hide");
     playBoard.classList.add("show");
     players.setAttribute("class", "players active player");
-}
+}*/
 
-function setlevel(value){
-    sessionStorage.setItem('level1', value);
-     console.log(level)
- 
-}
-
-//drow icons
-let playerXIcon = "fas fa-times",
-playerOIcon = "far fa-circle",
+let human = "X",
+ai = "O",
 playerSign = "X",
 runBot = true;
 
-
-//drow in play aria
 function clickedBox(element){
-    if(players.classList.contains("player")){
-        playerSign = human;
-        element.innerHTML = `<i class="${playerOIcon}"></i>`;
-        players.classList.remove("active");
-        element.setAttribute("id", playerSign);
-    }else{
-        element.innerHTML = `<i class="${playerXIcon}"></i>`;
+    
+        element.innerHTML = human;
         element.setAttribute("id", playerSign);
         players.classList.add("active");
-    }
+    
     selectWinner();
     element.style.pointerEvents = "none";
     playBoard.style.pointerEvents = "none";
@@ -66,30 +54,34 @@ function clickedBox(element){
 }
 
 
-//
 function bot(){
     let array = [];
     if(runBot){
-        playerSign = human;
+        playerSign = "X";
         for (let i = 0; i < allBox.length; i++) {
             if(allBox[i].childElementCount == 0){
                 array.push(i);
             }
         }
+        let randomBox = bestMove(array);
+        if(array.length > 0){
+            if(allBox[randomBox].innerHTML == ""){
+                allBox[randomBox].innerHTML = ai;
+                players.classList.remove("active");
+                allBox[randomBox].setAttribute("id", playerSign);
+            }
+            else{
+                 randomBox = bestMove(array);
+                 bot(runBot)
 
-        if(level === 'Easy'){
-            console.log(level);
+            }
+            selectWinner();
         }
-        else if (level === 'Medium'){
-            console.log(level)
-        }
-        else{
-            console.log(level)
-        }
+        allBox[randomBox].style.pointerEvents = "none";
+        playBoard.style.pointerEvents = "auto";
+        playerSign = "O";
     }
-    
 }
-
 
 function getIdVal(classname){
     return document.querySelector(".box" + classname).id;
@@ -120,46 +112,81 @@ function selectWinner(){
         }
     }
 }
+
 replayBtn.onclick = ()=>{
     window.location.reload();
 }
 
-let scores = {
-  X: 1,
-  O: -1,
-  tie: 0
-};
-let array = [];
-  
-  
-for (let i = 0; i < allBox.length; i++) {
-    if(allBox[i].childElementCount == 0){
-        array.push(i);
+
+function bestMove(board) {
+    let v = -Infinity;
+    let move;
+    for (let i = 0; i < 9; i++) {
+      
+        if (board[i] == '') {
+          board[i] = 'O';
+          let score = alphabeta(board, 0, -Infinity, Infinity, false);
+          board[i]= '';
+          if (score > v) {
+            v = score;
+            move = i;
+          }
+        }
+      
     }
-  }
-function alphabeta(array, depth, alpha, beta, isMaximizing) {
+    board[move]= 'O';
+    
+}
+  
+  let scores = {
+    X: 1,
+    O: -1,
+    tie: 0
+  };
  
-        let result = selectWinner();
+  function alphabeta(board, depth, alpha, beta, isMaximizing) {
+    let result = selectWinner(board);
     if (result !== null) {
       return scores[result];
     }
-
+  
     if (isMaximizing) {
       let v = -Infinity;
-      for (let i = 0; i < 3; i++) {
-       
-          if (array[i] == '') {
-            array[i] = ai;
+      for (let i = 0; i < 9; i++) {
+          if (board[i] == '') {
+            board[i] = 'X';
             let score = alphabeta(board, depth + 1, alpha, beta, false);
-            array[i] = '';
-            v=min(score,v);
-            alpha = max(alpha,v);
+            board[i] = '';
+            if(props.level=="hard") 
+            v = score > v ? score : v 
+            else if (props.level=='easy')
+            v = score < v ? score : v 
+            else if (props.level=="mid")
+            v = Math.random() < 0.5 ? score : v;
+            alpha = alpha > v ? alpha : v 
+            if(beta < alpha || beta == alpha)
+            break;
+          }
+      }
+      return v;
+    } else {
+      let v = Infinity;
+      for (let i = 0; i < 9; i++) {
+          if (board[i] == '') {
+            board[i] = 'O';
+            let score = alphabeta(board, depth + 1, alpha, beta, true);
+            board[i] = '';
+            if(level=="Hard")
+            v = score < v ? score : v 
+            else if (level=='Easy')
+            v = score > v ? score : v 
+            else if (level=="Medium")
+            v = Math.random() < 0.5 ? score : v;
+            beta = beta < v ? beta : v 
             if(beta < alpha || beta == alpha)
             break;
           }
       }
       return v;
     }
-
-}
-
+  }
